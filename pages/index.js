@@ -2,6 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
+import * as Sentry from "@sentry/nextjs";
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -49,6 +51,25 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+          <button
+            type="button"
+            onClick={() => {
+              Sentry.captureException(
+                new Error(`_error.js getInitialProps missing data at path: /`)
+              );
+            }}
+          >
+            Throw error
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              throw new Error("test");
+            }}
+          >
+            error
+          </button>
         </div>
       </main>
 
